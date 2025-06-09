@@ -15,7 +15,8 @@ import {
   UserCog, // for Admin
   UserPlus, // for Staff
   UserCheck, // for Owner
-  User, Bell // for Customer
+  User,
+  Bell, // for Customer
 } from 'lucide-vue-next'
 
 import NavMain from '@/components/shared/NavMain.vue'
@@ -140,7 +141,6 @@ const data = {
     },
   ],
 }
-
 </script>
 
 <template>

@@ -1,10 +1,7 @@
 <script setup lang="ts">
 import { type LucideIcon } from 'lucide-vue-next'
 
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
+import { DropdownMenu, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -22,7 +19,6 @@ const props = defineProps<{
     icon: LucideIcon
   }[]
 }>()
-
 </script>
 
 <template>
