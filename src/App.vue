@@ -10,6 +10,24 @@ import {
 } from '@/components/ui/breadcrumb'
 import { Separator } from '@/components/ui/separator'
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
+import { useRoute } from 'vue-router'
+import { computed } from 'vue'
+import { navigationData, type NavLink } from '@/data/navigation'
+
+const route = useRoute()
+
+const currentPage = computed(() => {
+  const currentPath = route.path || '/admin/dashboard'
+
+  const allLinks: NavLink[] = [
+    ...navigationData.statistics,
+    ...navigationData.generals,
+    ...navigationData.managements.flatMap((group) => group.items || []),
+  ]
+
+  const matched = allLinks.find((link) => link.url === currentPath)
+  return matched?.name ?? matched?.title ?? 'Unknown Page'
+})
 </script>
 
 <template>
@@ -31,7 +49,7 @@ import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/s
                 </BreadcrumbItem>
                 <BreadcrumbSeparator class="hidden md:block" />
                 <BreadcrumbItem>
-                  <BreadcrumbPage>Dashboard</BreadcrumbPage>
+                  <BreadcrumbPage>{{ currentPage }}</BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
