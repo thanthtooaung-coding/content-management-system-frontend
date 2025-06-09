@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { type LucideIcon } from 'lucide-vue-next'
-
 import { DropdownMenu, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import {
   SidebarGroup,
@@ -10,14 +8,11 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar'
+import type { NavLink } from '@/data/navigation.ts'
 
 const props = defineProps<{
   label: string
-  items: {
-    name: string
-    url: string
-    icon: LucideIcon
-  }[]
+  items: NavLink[]
 }>()
 </script>
 
@@ -27,10 +22,10 @@ const props = defineProps<{
     <SidebarMenu>
       <SidebarMenuItem v-for="item in items" :key="item.name">
         <SidebarMenuButton as-child>
-          <a :href="item.url">
+          <router-link :to="item.url">
             <component :is="item.icon" />
-            <span>{{ item.name }}</span>
-          </a>
+            <span>{{ item.name || item.title }}</span>
+          </router-link>
         </SidebarMenuButton>
         <DropdownMenu>
           <DropdownMenuTrigger as-child>
