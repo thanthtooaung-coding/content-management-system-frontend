@@ -47,10 +47,10 @@ export const navigationData: {
       icon: Users2,
       isActive: true,
       items: [
-        { title: 'Manage admin', url: '/admins', icon: UserCog },
-        { title: 'Manage staff', url: '/staffs', icon: UserPlus },
-        { title: 'Manage owner', url: '/owners', icon: UserCheck },
-        { title: 'Manage customer', url: '/customers', icon: User },
+        { title: 'Manage admin', url: '/admin/manage/admins', icon: UserCog },
+        { title: 'Manage staff', url: '/admin/manage/staffs', icon: UserPlus },
+        { title: 'Manage owner', url: '/admin/manage/owners', icon: UserCheck },
+        { title: 'Manage customer', url: '/admin/manage/customers', icon: User },
       ],
     },
     {
@@ -58,15 +58,15 @@ export const navigationData: {
       url: '#',
       icon: FileText,
       items: [
-        { title: 'Manage pages', url: '/pages', icon: ClipboardList },
-        { title: 'Manage page requests', url: '/pages-requests', icon: Sheet },
+        { title: 'Manage pages', url: '/admin/manage/pages', icon: ClipboardList },
+        { title: 'Manage page requests', url: '/admin/manage/pages-requests', icon: Sheet },
       ],
     },
   ],
   generals: [
-    { name: 'Notifications', url: '/notifications', icon: Bell },
-    { name: 'Profile', url: '/profile', icon: UserCircle },
-    { name: 'Settings', url: '/settings', icon: Settings2 },
-    { name: 'Logout', url: '/logout', icon: LogOut },
+    { name: 'Notifications', url: '/admin/notifications', icon: Bell },
+    { name: 'Profile', url: '/admin/profile', icon: UserCircle },
+    { name: 'Settings', url: '/admin/settings', icon: Settings2 },
+    { name: 'Logout', url: '/admin/logout', icon: LogOut },
   ],
 }
