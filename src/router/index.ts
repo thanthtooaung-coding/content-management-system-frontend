@@ -1,12 +1,20 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import NotFound from '@/views/NotFound.vue'
+import HomeView from '@/views/HomeView.vue'
+import AboutView from '@/views/AboutView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      redirect: '/admin/dashboard',
+      name: 'home',
+      component: AboutView,
+    },
+    {
+      path: '/admin/dashboard',
+      name: '/admin/dashboard',
+      component: HomeView,
     },
     {
       path: '/admin/manage/admins',
