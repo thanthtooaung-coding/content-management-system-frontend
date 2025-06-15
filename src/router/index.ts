@@ -22,6 +22,17 @@ const router = createRouter({
       component: () => import('../views/AdminManagement.vue'),
     },
     {
+      path: '/admin/manage/admins/create',
+      name: 'admin-create',
+      component: () => import('../views/forms/AdminCreateForm.vue'),
+    },
+    {
+      path: '/admin/manage/admins/:id/edit',
+      name: 'admin-edit',
+      component: () => import('../views/forms/AdminEditForm.vue'),
+      props: true,
+    },
+    {
       path: '/:pathMatch(.*)*',
       name: 'NotFound',
       component: NotFound,

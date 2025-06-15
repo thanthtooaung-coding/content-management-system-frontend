@@ -13,7 +13,7 @@
       v-model:search-query="searchQuery"
       v-model:filter-value="filterValue"
       v-model:view-mode="viewMode"
-      @create-item="openCreateDialog"
+      @create-item="navigateToCreate"
       :button-gradient="buttonGradient"
     />
 
@@ -24,7 +24,7 @@
         v-if="viewMode === 'grid'"
         :items="filteredItems"
         :config="props.config"
-        @edit-item="editItem"
+        @edit-item="navigateToEdit"
         @view-item="viewItem"
         @delete-item="deleteItem"
         @clear-filters="clearFilters"
@@ -33,10 +33,10 @@
       />
       <!-- List View -->
       <GenericItemList
-        v-else-if="viewMode === 'list'"
+        v-if="viewMode === 'list'"
         :items="filteredItems"
         :config="props.config"
-        @edit-item="editItem"
+        @edit-item="navigateToEdit"
         @view-item="viewItem"
         @delete-item="deleteItem"
         @clear-filters="clearFilters"
@@ -45,10 +45,10 @@
       />
       <!-- Table View -->
       <GenericItemTable
-        v-else-if="viewMode === 'table'"
+        v-if="viewMode === 'table'"
         :items="filteredItems"
         :config="props.config"
-        @edit-item="editItem"
+        @edit-item="navigateToEdit"
         @view-item="viewItem"
         @delete-item="deleteItem"
         @clear-filters="clearFilters"
@@ -56,17 +56,6 @@
         :filter-value="filterValue"
       />
     </div>
-
-    <!-- Create/Edit Dialog -->
-    <GenericItemDialog
-      :is-open="isDialogOpen"
-      :is-editing="isEditing"
-      :config="props.config"
-      :form-data="formData"
-      :button-gradient="buttonGradient"
-      @close="closeDialog"
-      @submit="submitForm"
-    />
 
     <!-- View Details Dialog -->
     <GenericViewDetailsDialog
@@ -79,14 +68,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, ref, watch } from 'vue'
+import { computed, ref } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import type { ManagementConfig } from '@/constant/managementConfig.ts'
 import GenericManagementHeaderSection from '@/components/shared/manage/GenericManagementHeaderSection.vue'
 import GenericManagementActionBar from '@/components/shared/manage/GenericManagementActionBar.vue'
 import GenericItemGrid from '@/components/shared/manage/GenericItemGrid.vue'
 import GenericItemList from '@/components/shared/manage/GenericItemList.vue'
 import GenericItemTable from '@/components/shared/manage/GenericItemTable.vue'
-import GenericItemDialog from '@/components/shared/manage/GenericItemDialog.vue'
 import GenericViewDetailsDialog from '@/components/shared/manage/GenericViewDetailsDialog.vue'
 
 const props = defineProps<{
@@ -103,15 +92,14 @@ const emit = defineEmits<{
   'item-delete': [item: any]
 }>()
 
+const router = useRouter()
+const route = useRoute()
+
 const searchQuery = ref('')
 const filterValue = ref<string | null>('all')
 const viewMode = ref<'grid' | 'list' | 'table'>('list')
-const isDialogOpen = ref(false)
 const isViewDialogOpen = ref(false)
-const isEditing = ref(false)
 const selectedItem = ref<any>(null)
-
-const formData = reactive<Record<string, any>>({})
 
 const filteredItems = computed(() => {
   return props.items.filter((item) => {
@@ -181,21 +169,26 @@ const clearFilters = () => {
   filterValue.value = 'all'
 }
 
-const openCreateDialog = () => {
-  isEditing.value = false
-  resetForm()
-  isDialogOpen.value = true
+const navigateToCreate = () => {
+  // Check if we're on admin management page
+  if (route.path.includes('/admin/manage/admins')) {
+    router.push('/admin/manage/admins/create')
+  } else {
+    // For other entities, use generic route
+    const entityPath = route.path.split('/').pop()
+    router.push(`/admin/manage/${entityPath}/create`)
+  }
 }
 
-const editItem = (item: any) => {
-  isEditing.value = true
-  selectedItem.value = item
-
-  props.config.formFields.forEach((field) => {
-    formData[field.key] = item[field.key] || ''
-  })
-
-  isDialogOpen.value = true
+const navigateToEdit = (item: any) => {
+  // Check if we're on admin management page
+  if (route.path.includes('/admin/manage/admins')) {
+    router.push(`/admin/manage/admins/${item.id}/edit`)
+  } else {
+    // For other entities, use generic route
+    const entityPath = route.path.split('/').pop()
+    router.push(`/admin/manage/${entityPath}/${item.id}/edit`)
+  }
 }
 
 const viewItem = (item: any) => {
@@ -209,49 +202,4 @@ const deleteItem = (item: any) => {
     emit('item-delete', item)
   }
 }
-
-const closeDialog = () => {
-  isDialogOpen.value = false
-  resetForm()
-}
-
-const resetForm = () => {
-  props.config.formFields.forEach((field) => {
-    formData[field.key] = ''
-  })
-  selectedItem.value = null
-}
-
-const submitForm = (itemData: Record<string, any>) => {
-  if (isEditing.value && selectedItem.value) {
-    const updatedItem = {
-      ...selectedItem.value,
-      ...itemData,
-      updated_at: new Date().toISOString(),
-    }
-    emit('item-update', updatedItem)
-  } else {
-    const newItem = {
-      ...itemData,
-      [props.config.idField]: Date.now(),
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-    }
-    emit('item-create', newItem)
-  }
-
-  closeDialog()
-}
-
-watch(
-  () => props.config.formFields,
-  (fields) => {
-    fields.forEach((field) => {
-      if (!(field.key in formData)) {
-        formData[field.key] = ''
-      }
-    })
-  },
-  { immediate: true },
-)
 </script>
