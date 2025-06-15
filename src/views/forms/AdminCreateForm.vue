@@ -32,7 +32,7 @@ import {
   MapPin,
   Calendar,
   Settings,
-  UserCheck
+  UserCheck,
 } from 'lucide-vue-next'
 
 const router = useRouter()
@@ -47,7 +47,7 @@ const formData = reactive({
   role_id: '',
   phone_number: '',
   address: '',
-  registration_date: new Date().toISOString().split('T')[0]
+  registration_date: new Date().toISOString().split('T')[0],
 })
 
 const formSections = [
@@ -63,7 +63,7 @@ const formSections = [
         icon: User,
         placeholder: 'Enter unique username',
         required: true,
-        helpText: 'Username must be unique and contain only letters, numbers, and underscores'
+        helpText: 'Username must be unique and contain only letters, numbers, and underscores',
       },
       {
         key: 'name',
@@ -71,7 +71,7 @@ const formSections = [
         type: 'text',
         icon: UserCircle,
         placeholder: 'Enter full name',
-        required: true
+        required: true,
       },
       {
         key: 'email',
@@ -80,9 +80,9 @@ const formSections = [
         icon: Mail,
         placeholder: 'Enter email address',
         required: true,
-        helpText: 'This will be used for login and notifications'
-      }
-    ]
+        helpText: 'This will be used for login and notifications',
+      },
+    ],
   },
   {
     title: 'Security & Access',
@@ -96,7 +96,7 @@ const formSections = [
         icon: Lock,
         placeholder: 'Enter secure password',
         required: true,
-        helpText: 'Password must be at least 8 characters with mixed case, numbers, and symbols'
+        helpText: 'Password must be at least 8 characters with mixed case, numbers, and symbols',
       },
       {
         key: 'confirmPassword',
@@ -104,7 +104,7 @@ const formSections = [
         type: 'password',
         icon: Lock,
         placeholder: 'Confirm password',
-        required: true
+        required: true,
       },
       {
         key: 'role_id',
@@ -116,11 +116,11 @@ const formSections = [
         options: [
           { value: '1', label: 'Super Administrator - Full system access' },
           { value: '2', label: 'Administrator - Standard admin access' },
-          { value: '3', label: 'Moderator - Limited admin access' }
+          { value: '3', label: 'Moderator - Limited admin access' },
         ],
-        helpText: 'Choose the appropriate access level for this administrator'
-      }
-    ]
+        helpText: 'Choose the appropriate access level for this administrator',
+      },
+    ],
   },
   {
     title: 'Contact Information',
@@ -133,7 +133,7 @@ const formSections = [
         type: 'text',
         icon: Phone,
         placeholder: 'Enter phone number',
-        helpText: 'Include country code for international numbers'
+        helpText: 'Include country code for international numbers',
       },
       {
         key: 'address',
@@ -141,17 +141,17 @@ const formSections = [
         type: 'textarea',
         icon: MapPin,
         placeholder: 'Enter complete address',
-        fullWidth: true
+        fullWidth: true,
       },
       {
         key: 'registration_date',
         label: 'Registration Date',
         type: 'date',
         icon: Calendar,
-        required: true
-      }
-    ]
-  }
+        required: true,
+      },
+    ],
+  },
 ]
 
 const handleSubmit = async (data: Record<string, any>) => {
@@ -164,14 +164,14 @@ const handleSubmit = async (data: Record<string, any>) => {
 
   try {
     // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000))
+    await new Promise((resolve) => setTimeout(resolve, 2000))
 
     const newAdmin = {
       ...data,
       id: Date.now(),
       role_id: parseInt(data.role_id),
       created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
     }
 
     console.log('Creating admin:', newAdmin)

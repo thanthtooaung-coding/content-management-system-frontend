@@ -17,8 +17,7 @@
               <p class="text-sm text-muted-foreground/80">{{ subtitle }}</p>
             </div>
           </div>
-          <div class="flex items-center space-x-3">
-          </div>
+          <div class="flex items-center space-x-3"></div>
         </div>
       </div>
     </div>

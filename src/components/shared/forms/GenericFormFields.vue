@@ -4,7 +4,9 @@
     <div v-for="(section, sectionIndex) in formSections" :key="sectionIndex" class="space-y-6">
       <!-- Section Header -->
       <div v-if="section.title" class="relative">
-        <div class="bg-gradient-to-r from-primary/10 via-primary/5 to-transparent rounded-xl p-6 border border-primary/20">
+        <div
+          class="bg-gradient-to-r from-primary/10 via-primary/5 to-transparent rounded-xl p-6 border border-primary/20"
+        >
           <div class="flex items-center space-x-4">
             <div class="p-3 bg-primary/10 rounded-xl border border-primary/20">
               <component :is="section.icon" class="h-6 w-6 text-primary" />
@@ -13,7 +15,10 @@
               <h3 class="text-xl font-semibold text-foreground flex items-center">
                 {{ section.title }}
               </h3>
-              <p v-if="section.description" class="text-sm text-muted-foreground mt-1 leading-relaxed">
+              <p
+                v-if="section.description"
+                class="text-sm text-muted-foreground mt-1 leading-relaxed"
+              >
                 {{ section.description }}
               </p>
             </div>
@@ -34,10 +39,13 @@
           :class="[
             'space-y-3',
             field.fullWidth ? 'md:col-span-2 lg:col-span-3' : '',
-            field.halfWidth ? 'md:col-span-1' : ''
+            field.halfWidth ? 'md:col-span-1' : '',
           ]"
         >
-          <Label :for="field.key" class="text-sm font-medium text-foreground flex items-center space-x-2">
+          <Label
+            :for="field.key"
+            class="text-sm font-medium text-foreground flex items-center space-x-2"
+          >
             <component :is="field.icon" class="h-4 w-4 text-muted-foreground" />
             <span>{{ field.label }}</span>
             <span v-if="field.required" class="text-destructive">*</span>
@@ -81,7 +89,9 @@
             v-model="localFormData[field.key]"
             :required="field.required"
           >
-            <SelectTrigger class="h-12 bg-background border-input focus:border-primary focus:ring-primary/20 rounded-lg">
+            <SelectTrigger
+              class="h-12 bg-background border-input focus:border-primary focus:ring-primary/20 rounded-lg"
+            >
               <SelectValue :placeholder="field.placeholder" />
             </SelectTrigger>
             <SelectContent class="bg-popover border-border">
@@ -155,8 +165,11 @@
           :disabled="isSubmitting"
           class="px-8 py-3 text-sm font-medium bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 disabled:opacity-50"
         >
-          <component :is="isSubmitting ? Loader2 : Save" :class="['mr-2 h-4 w-4', isSubmitting ? 'animate-spin' : '']" />
-          {{ isSubmitting ? 'Saving...' : (isEditing ? 'Update' : 'Create') }}
+          <component
+            :is="isSubmitting ? Loader2 : Save"
+            :class="['mr-2 h-4 w-4', isSubmitting ? 'animate-spin' : '']"
+          />
+          {{ isSubmitting ? 'Saving...' : isEditing ? 'Update' : 'Create' }}
         </Button>
       </div>
     </div>
@@ -214,7 +227,7 @@ watch(
   (newVal) => {
     localFormData.value = { ...newVal }
   },
-  { deep: true, immediate: true }
+  { deep: true, immediate: true },
 )
 
 const resetForm = () => {

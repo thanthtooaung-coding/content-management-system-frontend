@@ -32,7 +32,7 @@ import {
   MapPin,
   Calendar,
   Settings,
-  Info
+  Info,
 } from 'lucide-vue-next'
 
 const router = useRouter()
@@ -50,7 +50,7 @@ const formData = reactive({
   address: '',
   registration_date: '',
   created_at: '',
-  updated_at: ''
+  updated_at: '',
 })
 
 const formSections = [
@@ -66,7 +66,7 @@ const formSections = [
         icon: User,
         placeholder: 'Enter unique username',
         required: true,
-        helpText: 'Username must be unique and contain only letters, numbers, and underscores'
+        helpText: 'Username must be unique and contain only letters, numbers, and underscores',
       },
       {
         key: 'name',
@@ -74,7 +74,7 @@ const formSections = [
         type: 'text',
         icon: UserCircle,
         placeholder: 'Enter full name',
-        required: true
+        required: true,
       },
       {
         key: 'email',
@@ -83,9 +83,9 @@ const formSections = [
         icon: Mail,
         placeholder: 'Enter email address',
         required: true,
-        helpText: 'This will be used for login and notifications'
-      }
-    ]
+        helpText: 'This will be used for login and notifications',
+      },
+    ],
   },
   {
     title: 'Security Settings',
@@ -102,11 +102,11 @@ const formSections = [
         options: [
           { value: '1', label: 'Super Administrator - Full system access' },
           { value: '2', label: 'Administrator - Standard admin access' },
-          { value: '3', label: 'Moderator - Limited admin access' }
+          { value: '3', label: 'Moderator - Limited admin access' },
         ],
-        helpText: 'Choose the appropriate access level for this administrator'
-      }
-    ]
+        helpText: 'Choose the appropriate access level for this administrator',
+      },
+    ],
   },
   {
     title: 'Contact Information',
@@ -119,7 +119,7 @@ const formSections = [
         type: 'text',
         icon: Phone,
         placeholder: 'Enter phone number',
-        helpText: 'Include country code for international numbers'
+        helpText: 'Include country code for international numbers',
       },
       {
         key: 'address',
@@ -127,17 +127,17 @@ const formSections = [
         type: 'textarea',
         icon: MapPin,
         placeholder: 'Enter complete address',
-        fullWidth: true
+        fullWidth: true,
       },
       {
         key: 'registration_date',
         label: 'Registration Date',
         type: 'date',
         icon: Calendar,
-        required: true
-      }
-    ]
-  }
+        required: true,
+      },
+    ],
+  },
 ]
 
 onMounted(async () => {
@@ -154,7 +154,7 @@ onMounted(async () => {
       address: 'Sample Address',
       registration_date: '2025-06-10',
       created_at: '2025-06-10T00:00:00Z',
-      updated_at: '2025-06-10T00:00:00Z'
+      updated_at: '2025-06-10T00:00:00Z',
     }
 
     Object.assign(formData, mockAdmin)
@@ -169,12 +169,12 @@ const handleSubmit = async (data: Record<string, any>) => {
 
   try {
     // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000))
+    await new Promise((resolve) => setTimeout(resolve, 2000))
 
     const updatedAdmin = {
       ...data,
       role_id: parseInt(data.role_id),
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
     }
 
     console.log('Updating admin:', updatedAdmin)
