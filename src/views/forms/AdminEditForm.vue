@@ -26,7 +26,6 @@ import {
   User,
   UserCircle,
   Mail,
-  Lock,
   Shield,
   Phone,
   MapPin,
